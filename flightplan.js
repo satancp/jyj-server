@@ -2,7 +2,7 @@ const plan = require('flightplan');
 
 const appName = 'jyj';
 const username = 'root';
-const startFile = 'yarn --name \'jyj-api\' -- start';
+const startFile = 'yarn --name \'jyj-api\' -- dev';
 const privateKey = '/Users/Chris/.ssh/jyj_web.pem';
 const tmpDir = appName + '-' + new Date().getTime();
 
