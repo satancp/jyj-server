@@ -26,6 +26,9 @@ class OrderDataService extends Service {
                         results[i].receiver_id = user[0].id;
                         results[i].receiver_name = user[0].nickname;
                     } else if (order[a].user_type === 1) {
+                        results[i].boarder_id = user[0].id;
+                        results[i].boarder_name = user[0].nickname;
+                    } else if (order[a].user_type === 2) {
                         results[i].producer_id = user[0].id;
                         results[i].producer_name = user[0].nickname;
                     }
@@ -64,13 +67,13 @@ class OrderDataService extends Service {
         if (data.board_price) query.board_price = data.board_price;
         if (data.image_url) query.image_url = data.image_url;
         const results = await app.mysql.beginTransactionScope(async conn => {
-            if (data.status === 5) {
+            if (data.status === 6) {
                 await conn.update(
                     't_user_order',
                     { status: 2, updated_at: new Date() },
                     {
                         where: {
-                            user_type: 1,
+                            user_type: 2,
                             order_id: data.id,
                         },
                     }
@@ -108,10 +111,13 @@ class OrderDataService extends Service {
                 status: 0,
             };
             if (query.user_type === 0) {
-                query.status = 1;
+                query.status = 2;
                 orderQuery.status = 1;
             } else if (query.user_type === 1) {
-                orderQuery.status = 2;
+                query.status = 2;
+                orderQuery.status = 3;
+            } else if (query.user_type === 2) {
+                orderQuery.status = 3;
             }
             if (data.board_price) orderQuery.board_price = data.board_price;
             const result = await conn.insert('t_user_order', query);
@@ -147,7 +153,7 @@ class OrderDataService extends Service {
         const results = await app.mysql.beginTransactionScope(async conn => {
             const orderQuery = {
                 id: data.order_id,
-                status: 3,
+                status: 4,
             };
             const result = await conn.update('t_user_order', query, {
                 where: {

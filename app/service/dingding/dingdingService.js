@@ -107,13 +107,15 @@ class DingdingService extends Service {
         case '美工':
             return 0;
         case '生产厂家':
+            return 2;
+        case '制版厂家':
             return 1;
         case '仓库管理':
-            return 3;
+            return 4;
         case '经理':
             return 999;
         default:
-            return 2;
+            return 3;
         }
     }
 }
