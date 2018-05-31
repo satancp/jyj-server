@@ -3,7 +3,7 @@ const Subscription = require('egg').Subscription;
 class DingdingSchedule extends Subscription {
     static get schedule() {
         return {
-            interval: 1000 * 60 * 60 * 24 * 15,
+            interval: 1000 * 60 * 60 * 24 * 7,
             type: 'worker',
             immediate: true,
         };
