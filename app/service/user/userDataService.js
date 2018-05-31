@@ -31,6 +31,17 @@ class UserDataService extends Service {
         });
         return results;
     }
+
+    async updateUser(data) {
+        const { app } = this;
+        const results = await app.mysql.update('t_user', {
+            id: data.id,
+            nickname: data.nickname,
+            permission: data.permission,
+            dingding_id: data.dingding_id,
+        });
+        return results;
+    }
 }
 
 module.exports = UserDataService;

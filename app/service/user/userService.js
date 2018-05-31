@@ -18,6 +18,12 @@ class UserService extends Service {
         const results = await ctx.service.user.userDataService.addUser(data);
         return results;
     }
+
+    async updateUser(data) {
+        const { ctx } = this;
+        const results = await ctx.service.user.userDataService.updateUser(data);
+        return results;
+    }
 }
 
 module.exports = UserService;

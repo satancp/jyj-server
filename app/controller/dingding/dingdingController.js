@@ -6,6 +6,12 @@ class DingdingController extends Controller {
         const results = await ctx.service.dingding.dingdingService.getUserFromDing(ctx.query.code);
         this.success(results);
     }
+
+    async getAuth() {
+        const { ctx } = this;
+        const results = await ctx.service.dingding.dingdingService.getAuth();
+        this.success(results);
+    }
 }
 
 module.exports = DingdingController;

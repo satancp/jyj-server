@@ -1,4 +1,5 @@
 const Service = require('../baseService');
+const moment = require('moment');
 
 class DingdingService extends Service {
     async getToken() {
@@ -12,6 +13,25 @@ class DingdingService extends Service {
         const url = 'https://oapi.dingtalk.com/gettoken';
         const results = await this.get(url, param);
         return results.access_token;
+    }
+
+    async getJSTicket() {
+        const { ctx } = this;
+        const access_token = await this.getToken();
+        const param = {
+            access_token,
+        };
+        const url = 'https://oapi.dingtalk.com/get_jsapi_ticket';
+        const results = await this.get(url, param);
+        return results.ticket;
+    }
+
+    async getAuth() {
+        const timestamp = moment().valueOf();
+        const nonce =
+            moment()
+                .unix()
+                .toString() + 'asd';
     }
 
     async getUserFromDing(code) {
@@ -73,7 +93,12 @@ class DingdingService extends Service {
                 dingding_id: allMembers[i].userid,
             };
             const check = await ctx.service.user.userService.getUserByDingId(allMembers[i].userid);
-            if (!check) await ctx.service.user.userService.addUser(param);
+            if (!check) {
+                await ctx.service.user.userService.addUser(param);
+            } else {
+                param.id = check.id;
+                await ctx.service.user.userService.updateUser(param);
+            }
         }
     }
 
