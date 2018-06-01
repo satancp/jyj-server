@@ -48,6 +48,20 @@ class OrderDataService extends Service {
             board_price: 0,
             custom_type: data.custom_type,
             est_time: moment(data.est_time, moment.ISO_8601).toDate(),
+            contact_phone: data.contact_phone,
+            client: data.client,
+            image_shortcut: data.image_shortcut,
+            double_size: data.double_size,
+            number: data.number,
+            print_info: data.print_info,
+            include_hand_size: data.include_hand_size,
+            print_color: data.print_color,
+            figure: data.figure,
+            delivery: data.delivery,
+            background_color: data.background_color,
+            client_confirm: data.client_confirm,
+            address: data.address,
+            special: data.special,
         };
         const check = await app.mysql.select('t_order', {
             where: { is_delete: false, custom_type: data.custom_type },
@@ -66,6 +80,20 @@ class OrderDataService extends Service {
         if (data.status) query.status = data.status;
         if (data.board_price) query.board_price = data.board_price;
         if (data.image_url) query.image_url = data.image_url;
+        if (data.contact_phone) query.contact_phone = data.contact_phone;
+        if (data.client) query.client = data.client;
+        if (data.image_shortcut) query.image_shortcut = data.image_shortcut;
+        if (data.double_size) query.double_size = data.double_size;
+        if (data.number) query.number = data.number;
+        if (data.print_info) query.print_info = data.print_info;
+        if (data.include_hand_size) query.include_hand_size = data.include_hand_size;
+        if (data.print_color) query.print_color = data.image_uprint_colorrl;
+        if (data.figure) query.figure = data.figure;
+        if (data.delivery) query.delivery = data.delivery;
+        if (data.background_color) query.background_color = data.background_color;
+        if (data.client_confirm) query.client_confirm = data.client_confirm;
+        if (data.address) query.address = data.address;
+        if (data.special) query.special = data.special;
         const results = await app.mysql.beginTransactionScope(async conn => {
             if (data.status === 6) {
                 await conn.update(
