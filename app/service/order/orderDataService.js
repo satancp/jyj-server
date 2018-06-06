@@ -63,9 +63,10 @@ class OrderDataService extends Service {
             address: data.address,
             special: data.special,
         };
-        const check = await app.mysql.select('t_order', {
-            where: { is_delete: false, custom_type: data.custom_type },
-        });
+        // const check = await app.mysql.select('t_order', {
+        //    where: { is_delete: false, custom_type: data.custom_type },
+        // });
+        // if (check.length > 0) throw new Exception(DUPLICATE_ORDER_ERROR);
         const results = await app.mysql.insert('t_order', query);
         return results;
     }
